@@ -16,6 +16,10 @@ const upload = multer({ storage: storage });
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname,'/home.html'));
+});
+
 app.post('/send-email', upload.none(), async (req, res) => {
     const { data } = req.body;
 
