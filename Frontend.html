@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Behavioral Matrix</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body>
+
+  <div class="container mt-5 col-6" id="contactFormDiv">
+    <!-- <h2>Fill Details</h2> -->
+    <form id="contactForm">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email address</label>
+        <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
+      </div>
+      <div class="d-flex col-12 justify-content-center"><span type="submit" class="btn btn-success"
+          id="continueBtn">Continue</span>
+      </div>
+    </form>
+  </div>
+
+
+  <div class="container mt-4" id="matrix">
+    <h1 class="text-center">Behavioral Matrix</h1>
+    <table class="table table-bordered mt-4">
+      <thead>
+        <tr class="text-center">
+          <th>Core Values</th>
+          <th class="text-center" colspan="4">Behavioral Characteristics</th>
+        </tr>
+      </thead>
+      <tbody id="matrix-body">
+        <tr id="rust" class="text-center">
+          <td><b>Trust</b></td>
+          <td colspan="2">
+            <button class="btn-primary btn getBtn Trust">Integrity and Honesty</button>
+          </td>
+          <td colspan="2">
+            <button class="btn-primary btn getBtn Trust">Confidentiality</button>
+          </td>
+        </tr>
+        <tr id="dependability" class="text-center">
+          <td rowspan="2" style="vertical-align : middle;text-align:center;"><b>Dependability</b>
+          <td>
+            <button class="btn-primary btn getBtn Dependability">Accountability</button>
+          </td>
+          <td>
+            <button class="btn-primary btn getBtn Dependability">Consistency</button>
+          </td>
+          <td>
+            <button class="btn-primary btn getBtn Dependability">Adaptability to change</button>
+          </td>
+          </td>
+        </tr>
+        <tr class="text-center">
+          <td>
+            <button class="btn-primary btn getBtn Dependability">Reliability</button>
+          </td>
+          <td>
+            <button class="btn-primary btn getBtn Dependability">Learning from failures</button>
+          </td>
+          <td>
+            <button class="btn-primary btn getBtn Dependability">Foresighted</button>
+          </td>
+        </tr>
+        <tr id="care" class="text-center">
+          <td rowspan="3" style="vertical-align : middle;text-align:center;"><b>Care</b>
+          <td>
+            <button class="btn-primary btn getBtn Care">Encouraging and Supportive</button>
+          </td>
+          <td>
+            <button class="btn-primary btn getBtn Care">Emotional Intelligence</button>
+          </td>
+          <td>
+            <button class="btn-primary btn getBtn Care">Generosity with Time and Resources</button>
+          </td>
+          </td>
+        </tr>
+        <tr class="text-center">
+          <td>
+            <button class="btn-primary btn getBtn Care">Inclusivity and Team Bonding</button>
+          </td>
+          <td>
+            <button class="btn-primary btn getBtn Care">Advocacy and Championing Others</button>
+          </td>
+          <td>
+            <button class="btn-primary btn getBtn Care">Empathy in Conflict Resolution</button>
+          </td>
+        </tr>
+        <tr class="text-center">
+          <td>
+            <button class="btn-primary btn getBtn Care">Personalized Acts of Kindness</button>
+          </td>
+          <td>
+            <button class="btn-primary btn getBtn Care">Transparency and Open Communication</button>
+          </td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    <div class="d-flex col-12 justify-content-center m-5"><span type="submit" class="btn btn-warning text-black"
+        onclick="sendForReview()" style="font-weight: bold;" id="">Send for review</span>
+    </div>
+
+    <!-- Modal for displaying form -->
+    <div class="modal fade" id="questionModal" tabindex="-1" aria-labelledby="questionModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="questionModalLabel">Questions</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="questionForm">
+              <!-- Questions will be added here dynamically -->
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">
+              Close
+            </button>
+            <button type="button" class="btn btn-primary" onclick="submitForm()">
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.16.2/package/dist/xlsx.full.min.js"></script>
+    <script src="app.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
