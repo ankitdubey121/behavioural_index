@@ -1,26 +1,4 @@
-// Sample data for questions
-
-// Function to create the matrix
-// function createMatrix() {
-//     const matrixBody = document.getElementById('matrix-body');
-//     // const characteristics = ['Integrity', 'Honesty', 'Confidentiality'];
-
-//     characteristics.forEach(characteristic => {
-//         const row = document.createElement('tr');
-//         const cell = document.createElement('td');
-//         const button = document.createElement('button');
-//         button.className = 'btn btn-primary';
-//         button.innerText = characteristic;
-//         button.onclick = () => showQuestions(characteristic);
-
-//         cell.appendChild(button);
-//         row.appendChild(cell);
-
-//         matrixBody.appendChild(row);
-//     });
-// }
-
-// Function to display questions in the modal
+// Data for questions
 const data = [];
 const questionsData = {
     'Trust': {
@@ -141,54 +119,22 @@ const questionsData = {
     }
 };
 
-var currentBtn = ''
-
-const matrix = document.getElementById('matrix')
-matrix.setAttribute("style", 'filter: blur(0.5rem)')
-const continueBtn = document.getElementById('continueBtn')
-continueBtn.addEventListener("click", e => {
-    e.preventDefault()
-    const name = document.getElementById('name')
-    const email = document.getElementById('email')
-    console.log(name, email)
-    if (validateEmail(email.value) && name.value) {
-        name.setAttribute('readonly', 'true')
-        email.setAttribute('readonly', 'true')
-        matrix.removeAttribute('style')
-        email.setAttribute('style', 'border:2px solid green')
-        name.setAttribute('style', 'border:2px solid green')
-        continueBtn.innerText = "👍🏼"
-        continueBtn.setAttribute('style', "font-size:25px; transition: font-size 0.3s ease-in-out")
-        continueBtn.disabled = true
-        data.push({'Email': email.value, 'Name': name.value})
-        console.log(data)
-    } else {
-        email.setAttribute('style', 'border:2px solid red')
-    }
-});
-
-function validateEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
-
-buttons = document.getElementsByClassName('getBtn')
-
-Array.from(buttons).forEach((button) => {
-    button.addEventListener('click', showTrustQuestions);
-});
 
 
+
+// Function to show trust questions in modal
 function showTrustQuestions(e) {
     const modalLabel = document.getElementById('questionModalLabel');
     const btnName = e.target;
-    const currentBtnClassArray = btnName.getAttribute('class').split(" ")
-    const currentBtnClass = currentBtnClassArray[currentBtnClassArray.length - 1]
-    currentBtn = btnName
-    console.log(currentBtnClass)
+    const currentBtnClassArray = btnName.getAttribute('class').split(" ");
+    const currentBtnClass = currentBtnClassArray[currentBtnClassArray.length - 1];
+
+    currentBtn = btnName;
+
     modalLabel.innerText = `Questions for ${btnName.innerText}`;
     const questionForm = document.getElementById('questionForm');
-    questionForm.innerHTML = ''
+    questionForm.innerHTML = '';
+
     questionsData[currentBtnClass][btnName.innerText].forEach((element, index) => {
         const formGroup = document.createElement('div');
         formGroup.className = 'form-group';
@@ -200,28 +146,44 @@ function showTrustQuestions(e) {
         input.className = 'form-control';
         input.id = `${currentBtnClass}_${btnName.innerText}_${index}`;
         input.name = `${currentBtnClass}_${btnName.innerText}_${index}`;
-        console.log(input.name)
+        const specificQuestion = element;
+        const item = data.find(obj => obj.Question === specificQuestion);
+        console.log(item)
+        if(item){
+            input.innerText = item.Answer
+        }
+
         formGroup.appendChild(label);
         formGroup.appendChild(input);
         questionForm.appendChild(formGroup);
     });
+
     $('#questionModal').modal('show');
-    $(e.target).removeClass("btn-primary").addClass('btn-light');
 }
 
+// Function to reset button styles and modal content after modal close
+$('#questionModal').on('hidden.bs.modal', function () {
+    const questionForm = document.getElementById('questionForm');
+    questionForm.innerHTML = ''; // Clear modal content
+});
+
+// Attach event listeners to buttons with class 'getBtn'
+const buttons = document.getElementsByClassName('getBtn');
+Array.from(buttons).forEach((button) => {
+    button.addEventListener('click', showTrustQuestions);
+});
 
 // Function to handle form submission
 function submitForm() {
     const formData = new FormData(document.getElementById('questionForm'));
 
-    // Iterate through all sections in questionsData
     for (const category in questionsData) {
         for (const subCategory in questionsData[category]) {
             const questions = questionsData[category][subCategory];
             questions.forEach((question, index) => {
-                // Assume the form input names are in the format `category_subCategory_index`
                 const key = `${category}_${subCategory}_${index}`;
                 const answer = formData.get(key);
+                if(answer)
                 data.push({ Question: question, Answer: answer || "" });
             });
         }
@@ -229,6 +191,7 @@ function submitForm() {
     console.log(data);
     $('#questionModal').modal('hide');
 }
+
 
 
 async function sendForReview() {
